@@ -2,6 +2,23 @@ version: '3.9'
 
 services:
 
+  react-client-dev:
+    container_name: react_client_dev
+    build:
+      context: .
+      dockerfile: docker/react.dev.dockerfile
+    image: oleksiivelychko/react-dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    secrets:
+      - source: server.crt
+        target: /run/secrets/server.crt
+      - source: server.key
+        target: /run/secrets/server.key
+
   react-client-prod:
     container_name: react_client_prod
     build:

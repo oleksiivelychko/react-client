@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+
+  react-client-prod:
+    container_name: react_client_prod
+    build:
+      context: .
+      dockerfile: docker/react.prod.dockerfile
+    image: oleksiivelychko/react-prod
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    secrets:
+      - source: server.crt
+        target: /run/secrets/server.crt
+      - source: server.key
+        target: /run/secrets/server.key
+
+secrets:
+  server.crt:
+    file: /home/alex/GitHub/self-signed-certificates/certs/localhost.crt
+  server.key:
+    file: /home/alex/GitHub/self-signed-certificates/certs/localhost.key

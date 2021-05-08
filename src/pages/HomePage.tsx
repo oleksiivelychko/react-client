@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from "../styles/app/logo.svg";
 import './../styles/app/app.css';
+import {Link} from "react-router-dom";
 
 export default class HomePage extends React.Component {
   render() {
@@ -16,6 +17,7 @@ export default class HomePage extends React.Component {
               rel="noopener noreferrer"
           >
           </a>
+          <Link to='/login'>Login</Link>
         </header>
       </div>
     );

@@ -11,8 +11,10 @@ class App extends React.Component {
   render() {
     return (
       <BrowserRouter>
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
+          <span className="position-absolute">
+              <Link to="/">Home</Link>
+              <Link to="/login">Login</Link>
+          </span>
         <Switch>
           <Route path="/" component={HomePage} exact />
           <Route path="/login" component={LoginPage} />

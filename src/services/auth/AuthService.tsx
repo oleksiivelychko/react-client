@@ -1,12 +1,10 @@
-// In order to gain the TypeScript typings (for intellisense / autocomplete)
+import authEndpoint from "./params/AuthEndpoint";
 const axios = require('axios').default;
-
-const API_AUTH_URL = process.env.SERVER_URL + '/api/auth';
 
 class AuthService {
     login(username: string, password: string) {
         return axios
-            .post(API_AUTH_URL + '/login/', {username, password})
+            .post(`${authEndpoint}/login/`, {username, password})
             .then((response: any) => {
                 if (response.data.accessToken) {
                     localStorage.setItem('user', JSON.stringify(response.data));
@@ -25,7 +23,7 @@ class AuthService {
 
     register(username: string, email: string, password: string) {
         return axios
-            .post(API_AUTH_URL + '/register/', {username, email, password})
+            .post(`${authEndpoint}/register/`, {username, email, password})
             .then((response: any) => {
                 if (response.data.accessToken) {
                     localStorage.setItem('user', JSON.stringify(response.data));

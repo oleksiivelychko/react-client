@@ -1,4 +1,4 @@
-import authEndpoint from "./params/AuthEndpoint";
+import authEndpoint from '../../params/auth/AuthEndpoint';
 const axios = require('axios').default;
 
 class AuthService {

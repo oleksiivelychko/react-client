@@ -1,5 +1,5 @@
-import authHeader from "./params/AuthHeader";
-import authEndpoint from "./params/AuthEndpoint";
+import authHeader from '../../params/auth/AuthHeader';
+import authEndpoint from '../../params/auth/AuthEndpoint';
 const axios = require('axios').default;
 
 class UserService {

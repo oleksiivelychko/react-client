@@ -6,7 +6,7 @@ import {
     LOGIN_FAIL,
     LOGOUT,
     SET_MESSAGE,
-} from "./AuthTypes";
+} from '../../types/auth/AuthTypes';
 
 export const register = (username: string, email: string, password: string) => (dispatch: (arg0: { type: string; payload?: any; }) => void) =>
 {

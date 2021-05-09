@@ -1,4 +1,4 @@
-import authEndpoint from '../../params/auth/AuthEndpoint';
+import authEndpoint from '../../helpers/auth/AuthEndpoint';
 import axios, {AxiosResponse} from "axios";
 
 class AuthService {

@@ -1,6 +1,6 @@
-import authHeader from '../../params/auth/AuthHeader';
-import authEndpoint from '../../params/auth/AuthEndpoint';
-import axios from "axios";
+import authHeader from '../../helpers/auth/AuthHeader';
+import authEndpoint from '../../helpers/auth/AuthEndpoint';
+import axios from 'axios';
 
 class UserService {
     getUser() {

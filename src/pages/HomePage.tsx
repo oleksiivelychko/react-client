@@ -18,6 +18,7 @@ export default class HomePage extends React.Component {
           >
           </a>
           <Link to='/login'>Login</Link>
+          <Link to='/register'>Register</Link>
         </header>
       </div>
     );

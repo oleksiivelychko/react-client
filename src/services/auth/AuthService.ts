@@ -4,17 +4,13 @@ import axios, {AxiosResponse} from "axios";
 class AuthService {
     login(username: string, password: string) {
         return axios
-            .post(`${authEndpoint}/login/`, {username, password})
+            .post(`${authEndpoint()}/login/`, {username, password})
             .then((response: AxiosResponse) => {
                 if (response.data.accessToken) {
                     localStorage.setItem('user', JSON.stringify(response.data));
                 }
-
                 return response.data;
-            })
-            .catch((error: any) => {
-                console.log(error);
-            })
+            });
     }
 
     logout() {
@@ -29,10 +25,7 @@ class AuthService {
                     localStorage.setItem('user', JSON.stringify(response.data));
                     return response.data;
                 }
-            })
-            .catch((error: any) => {
-                console.log(error);
-            })
+            });
     }
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from "../styles/app/logo.svg";
-import './../styles/app/app.css';
+import logo from "../../styles/app/logo.svg";
+import './../../styles/app/app.css';
 import {Link} from 'react-router-dom';
 
 export default class HomePage extends React.Component {

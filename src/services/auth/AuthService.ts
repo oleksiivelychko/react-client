@@ -2,9 +2,9 @@ import axios, {AxiosResponse} from "axios";
 import authEndpoint from "../../helpers/auth/AuthEndpoint";
 
 class AuthService {
-    login(username: string, password: string) {
+    login(email: string, password: string) {
         return axios
-            .post(`${authEndpoint()}/login/`, {username, password})
+            .post(`${authEndpoint()}/login/`, {email, password})
             .then((response: AxiosResponse) => {
                 if (response.data.accessToken) {
                     localStorage.setItem('user', JSON.stringify(response.data));

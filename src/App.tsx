@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Switch, Route} from "react-router-dom";
+import {Router, Switch, Route} from "react-router-dom";
 import { connect } from "react-redux";
 import HomePage from "./components/pages/HomePage";
 import LoginPage from "./components/pages/auth/LoginPage";
@@ -32,14 +32,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
           <Route path="/" component={HomePage} exact />
           <Route path="/login" component={LoginPage} />
           <Route path="/register" component={RegisterPage} />
           <Route path="/profile" component={ProfilePage} />
         </Switch>
-      </BrowserRouter>
+      </Router>
     )
   }
 }

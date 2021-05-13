@@ -20,7 +20,6 @@ class App extends React.Component {
     };
 
     history.listen((location) => {
-      // @ts-ignore
       props.dispatch(clearMessage()); // clear message when changing location
     });
   }

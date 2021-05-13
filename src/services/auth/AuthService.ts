@@ -1,5 +1,5 @@
-import authEndpoint from '../../helpers/auth/AuthEndpoint';
 import axios, {AxiosResponse} from "axios";
+import authEndpoint from "../../helpers/auth/AuthEndpoint";
 
 class AuthService {
     login(username: string, password: string) {
@@ -8,8 +8,8 @@ class AuthService {
             .then((response: AxiosResponse) => {
                 if (response.data.accessToken) {
                     localStorage.setItem('user', JSON.stringify(response.data));
+                    return response.data;
                 }
-                return response.data;
             });
     }
 
@@ -19,7 +19,7 @@ class AuthService {
 
     register(username: string, email: string, password: string) {
         return axios
-            .post(`${authEndpoint}/register/`, {username, email, password})
+            .post(`${authEndpoint()}/register/`, {username, email, password})
             .then((response: AxiosResponse) => {
                 if (response.data.accessToken) {
                     localStorage.setItem('user', JSON.stringify(response.data));

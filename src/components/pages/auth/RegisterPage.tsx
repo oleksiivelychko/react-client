@@ -53,20 +53,25 @@ class RegisterPage extends React.Component<any, any> {
                         setSubmitting(this.handleSubmit(values));
                     }}
                 >
-                    {({ values, errors, isSubmitting}) => (
+                    {({
+                          values,
+                          errors,
+                          touched,
+                          isSubmitting
+                    }) => (
                         <Form className="auth__form auth__form-signup">
                             <h1 className="h3 mb-3 font-weight-normal">Sign up</h1>
                             <Field
                                 type="text"
                                 name="username"
-                                className={'form-control mt-1 ' + (errors.username ? 'alert alert-danger' : '')}
+                                className={'form-control mt-1 ' + (errors.username && touched.username ? 'alert alert-danger' : '')}
                                 placeholder="Username"
                                 validate={validateUsername}
                             />
                             <Field
                                 type="email"
                                 name="email"
-                                className={'form-control mt-1 ' + (errors.email ? 'alert alert-danger' : '')}
+                                className={'form-control mt-1 ' + (errors.email && touched.email ? 'alert alert-danger' : '')}
                                 placeholder="Email"
                                 validate={validateEmail}
                             />
@@ -74,7 +79,7 @@ class RegisterPage extends React.Component<any, any> {
                             <Field
                                 type="password"
                                 name="password"
-                                className={'form-control mt-1 ' + (errors.password ? 'alert alert-danger' : '')}
+                                className={'form-control mt-1 ' + (errors.password && touched.password ? 'alert alert-danger' : '')}
                                 placeholder="Password"
                                 validate={validatePassword}
                             />
@@ -82,7 +87,7 @@ class RegisterPage extends React.Component<any, any> {
                             <Field
                                 type="password"
                                 name="password_confirm"
-                                className={'form-control mt-1 ' + (errors.password_confirm ? 'alert alert-danger' : '')}
+                                className={'form-control mt-1 ' + (errors.password_confirm && touched.password_confirm ? 'alert alert-danger' : '')}
                                 placeholder="Confirm password"
                                 validate={(value: string) => confirmPassword(values.password, value)}
                             />

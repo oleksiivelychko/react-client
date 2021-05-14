@@ -16,13 +16,13 @@ class RegisterPage extends React.Component<any, any> {
         };
     }
 
-    handleSubmit(values: { username: string, email: string; password: string }): boolean {
+    handleSubmit(values: { name: string, email: string; password: string, password_confirmation: string }): boolean {
         this.setState({
             loading: true,
             successful: false,
         });
 
-        this.props.dispatch(register(values.username, values.email, values.password))
+        this.props.dispatch(register(values.name, values.email, values.password, values.password_confirmation))
             .then(() => {
                 this.setState({
                     loading: false,
@@ -40,7 +40,7 @@ class RegisterPage extends React.Component<any, any> {
     }
 
     render() {
-        const { isLoggedIn, message } = this.props;
+        const { isLoggedIn, message, validationErrors } = this.props;
         if (isLoggedIn) {
             return <Redirect to='/profile' />;
         }
@@ -48,7 +48,7 @@ class RegisterPage extends React.Component<any, any> {
         return (
             <div className="auth">
                 <Formik
-                    initialValues={{ username: '', email: '', password: '', password_confirm: '' }}
+                    initialValues={{ name: '', email: '', password: '', password_confirmation: '' }}
                     onSubmit={(values, { setSubmitting }) => {
                         setSubmitting(this.handleSubmit(values));
                     }}
@@ -63,11 +63,16 @@ class RegisterPage extends React.Component<any, any> {
                             <h1 className="h3 mb-3 font-weight-normal">Sign up</h1>
                             <Field
                                 type="text"
-                                name="username"
-                                className={'form-control mt-1 ' + (errors.username && touched.username ? 'alert alert-danger' : '')}
+                                name="name"
+                                className={'form-control mt-1 ' + (errors.name && touched.name ? 'alert alert-danger' : '')}
                                 placeholder="Username"
                                 validate={validateUsername}
                             />
+                            <ErrorMessage className="text-danger" name="name" component="div" />
+                            <div dangerouslySetInnerHTML={{__html: validationErrors && validationErrors.name
+                                    ? validationErrors.name.map((x: string) => "<span class='text-danger'>"+x+"</span>")
+                                    : ''}} />
+
                             <Field
                                 type="email"
                                 name="email"
@@ -76,6 +81,10 @@ class RegisterPage extends React.Component<any, any> {
                                 validate={validateEmail}
                             />
                             <ErrorMessage className="text-danger" name="email" component="div" />
+                            <div dangerouslySetInnerHTML={{__html: validationErrors && validationErrors.email
+                                    ? validationErrors.email.map((x: string) => "<span class='text-danger'>"+x+"</span>")
+                                    : ''}} />
+
                             <Field
                                 type="password"
                                 name="password"
@@ -84,14 +93,22 @@ class RegisterPage extends React.Component<any, any> {
                                 validate={validatePassword}
                             />
                             <ErrorMessage className="text-danger" name="password" component="div" />
+                            <div dangerouslySetInnerHTML={{__html: validationErrors && validationErrors.password
+                                    ? validationErrors.password.map((x: string) => "<span class='text-danger'>"+x+"</span>")
+                                    : ''}} />
+
                             <Field
                                 type="password"
-                                name="password_confirm"
-                                className={'form-control mt-1 ' + (errors.password_confirm && touched.password_confirm ? 'alert alert-danger' : '')}
+                                name="password_confirmation"
+                                className={'form-control mt-1 ' + (errors.password_confirmation && touched.password_confirmation ? 'alert alert-danger' : '')}
                                 placeholder="Confirm password"
                                 validate={(value: string) => confirmPassword(values.password, value)}
                             />
-                            <ErrorMessage className="text-danger" name="password_confirm" component="div" />
+                            <ErrorMessage className="text-danger" name="password_confirmation" component="div" />
+                            <div dangerouslySetInnerHTML={{__html: validationErrors && validationErrors.password_confirmation
+                                    ? validationErrors.password_confirmation.map((x: string) => "<span class='text-danger'>"+x+"</span>")
+                                    : ''}} />
+
                             <button type="submit" disabled={isSubmitting} className="btn btn-lg btn-primary btn-block mt-3">
                                 {this.state.loading && (<span className="spinner-border spinner-border-sm" />)}
                                 Register
@@ -107,10 +124,12 @@ class RegisterPage extends React.Component<any, any> {
     }
 }
 
-function mapStateToProps(state: { message: { message: any; }; }) {
+function mapStateToProps(state: { message: { message: string; }; validationErrors: { validationErrors: Array<Object>; }; }) {
     const { message } = state.message;
+    const { validationErrors } = state.validationErrors;
     return {
         message,
+        validationErrors,
     };
 }
 

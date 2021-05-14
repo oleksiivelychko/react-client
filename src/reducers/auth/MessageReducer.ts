@@ -1,4 +1,7 @@
-import { SET_MESSAGE, CLEAR_MESSAGE } from '../../types/auth/AuthTypes';
+import {
+    SET_MESSAGE,
+    CLEAR_MESSAGE
+} from '../../actions/Types';
 
 const initialState = {};
 

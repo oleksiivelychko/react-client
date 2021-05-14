@@ -6,12 +6,28 @@ import {
     LOGIN_FAIL,
     LOGOUT,
     SET_MESSAGE,
-} from '../../types/auth/AuthTypes';
+    SET_VALIDATION_ERRORS
+} from '../Types';
 
-export const register = (username: string, email: string, password: string) => (dispatch: (arg0: { type: string; payload?: any; }) => void) =>
+export const register = (name: string, email: string, password: string, password_confirmation: string) => (dispatch: (arg0: { type: string; payload?: any; }) => void) =>
 {
-    return AuthService.register(username, email, password).then(
+    return AuthService.register(name, email, password, password_confirmation).then(
         (response: { data: { message: any; }; }) => {
+
+            // @ts-ignore
+            if (typeof response.status !== 'undefined' && response.status === 400) {
+                dispatch({
+                    type: REGISTER_FAIL,
+                });
+
+                dispatch({
+                    type: SET_VALIDATION_ERRORS,
+                    payload: response.data,
+                });
+
+                return Promise.reject();
+            }
+
             dispatch({
                 type: REGISTER_SUCCESS,
             });
@@ -49,6 +65,34 @@ export const login = (email: string, password: string) => (dispatch: (arg0: { ty
 {
     return AuthService.login(email, password).then(
         (data: any) => {
+
+            // @ts-ignore
+            if (typeof data.status !== 'undefined') {
+
+                switch (data.status) {
+                    case 401:
+                        dispatch({
+                            type: LOGIN_FAIL,
+                        });
+                        dispatch({
+                            type: SET_MESSAGE,
+                            payload: data.data && data.data.error ? data.data.error : data.data.toString()
+                        });
+                        break;
+                    case 422:
+                        dispatch({
+                            type: LOGIN_FAIL,
+                        });
+                        dispatch({
+                            type: SET_VALIDATION_ERRORS,
+                            payload: data.data,
+                        });
+                        break;
+                }
+
+                return Promise.reject();
+            }
+
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: { user: data },

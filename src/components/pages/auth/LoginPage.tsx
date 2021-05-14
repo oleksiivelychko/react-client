@@ -31,7 +31,7 @@ class LoginPage extends React.Component<any, any> {
     }
 
     render() {
-        const { isLoggedIn, message } = this.props;
+        const { isLoggedIn, message, validationErrors } = this.props;
         if (isLoggedIn) {
             return <Redirect to='/profile' />;
         }
@@ -55,6 +55,10 @@ class LoginPage extends React.Component<any, any> {
                             validate={validateEmail}
                         />
                         <ErrorMessage className="text-danger" name="email" component="div" />
+                        <div dangerouslySetInnerHTML={{__html: validationErrors && validationErrors.email
+                                ? validationErrors.email.map((x: string) => "<span class='text-danger'>"+x+"</span>")
+                                : ''}} />
+
                         <Field
                             type="password"
                             name="password"
@@ -63,6 +67,10 @@ class LoginPage extends React.Component<any, any> {
                             validate={validatePassword}
                         />
                         <ErrorMessage className="text-danger" name="password" component="div" />
+                        <div dangerouslySetInnerHTML={{__html: validationErrors && validationErrors.password
+                                ? validationErrors.password.map((x: string) => "<span class='text-danger'>"+x+"</span>")
+                                : ''}} />
+
                         <button type="submit" disabled={isSubmitting} className="btn btn-lg btn-primary btn-block mt-3">
                             {this.state.loading && (<span className="spinner-border spinner-border-sm" />)}
                           Log in
@@ -79,12 +87,14 @@ class LoginPage extends React.Component<any, any> {
     }
 }
 
-function mapStateToProps(state: { auth: { isLoggedIn: any; }; message: { message: any; }; }) {
+function mapStateToProps(state: { auth: { isLoggedIn: any; }; message: { message: any; }; validationErrors: { validationErrors: any; }; }) {
     const { isLoggedIn } = state.auth;
     const { message } = state.message;
+    const { validationErrors } = state.validationErrors;
     return {
         isLoggedIn,
-        message
+        message,
+        validationErrors,
     };
 }
 

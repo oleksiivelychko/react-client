@@ -23,20 +23,6 @@ class ProfilePage extends React.Component {
                     <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
                     {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
                 </p>
-                <p>
-                    <strong>Id:</strong> {currentUser.id}
-                </p>
-                <p>
-                    <strong>Email:</strong> {currentUser.email}
-                </p>
-                <strong>Authorities:</strong>
-                <ul>
-                    {currentUser.roles &&
-                    currentUser.roles.map((
-                        role: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined,
-                        index: React.Key | null | undefined
-                    ) => <li key={index}>{role}</li>)}
-                </ul>
             </div>
         );
     }

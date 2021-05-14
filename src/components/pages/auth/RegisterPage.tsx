@@ -124,10 +124,12 @@ class RegisterPage extends React.Component<any, any> {
     }
 }
 
-function mapStateToProps(state: { message: { message: string; }; validationErrors: { validationErrors: Array<Object>; }; }) {
+function mapStateToProps(state: { auth: { isLoggedIn: any; }; message: { message: any; }; validationErrors: { validationErrors: any; }; }) {
+    const { isLoggedIn } = state.auth;
     const { message } = state.message;
     const { validationErrors } = state.validationErrors;
     return {
+        isLoggedIn,
         message,
         validationErrors,
     };

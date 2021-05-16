@@ -2,6 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import authEndpoint from "../../helpers/auth/AuthEndpoint";
 
 class AuthService {
+
     login(email: string, password: string) {
         return axios
             .post(`${authEndpoint()}/login/`, {email, password})
@@ -31,16 +32,15 @@ class AuthService {
                 });
     }
 
-    logout() {
-        localStorage.removeItem('user');
-    }
-
     register(name: string, email: string, password: string, password_confirmation: string) {
         return axios
             .post(`${authEndpoint()}/register/`, {name, email, password, password_confirmation})
             .then((response: AxiosResponse) => {
                 if (response.data.accessToken) {
                     localStorage.setItem('user', JSON.stringify(response.data));
+                    return response.data;
+                }
+                if (response.data.message) {
                     return response.data;
                 }
             })
@@ -50,8 +50,17 @@ class AuthService {
                         status: error.response.status,
                         data: error.response.data
                     };
+                } else {
+                    return {
+                        status: 500,
+                        data: error.toString()
+                    };
                 }
             });
+    }
+
+    logout() {
+        localStorage.removeItem('user');
     }
 }
 

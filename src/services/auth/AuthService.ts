@@ -13,49 +13,39 @@ class AuthService {
                 }
             })
             .catch(function (error) {
-                    if (error.response) {
-                        // Request made and server responded
-                        //console.log(error.response.data);
-                        //console.log(error.response.status);
-                        //console.log(error.response.headers);
-                        return {
-                            status: error.response.status,
-                            data: error.response.data
-                        };
-                    } else if (error.request) {
-                        // The request was made but no response was received
-                        //console.log(error.request);
-                    } else {
-                        // Something happened in setting up the request that triggered an Error
-                        //console.log('Error', error.message);
-                    }
-                });
+                if (error.response) {
+                    // Request made and server responded
+                    //console.log(error.response.data);
+                    //console.log(error.response.status);
+                    //console.log(error.response.headers);
+                    return {
+                        status: error.response.status,
+                        data: error.response.data
+                    };
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    //console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    //console.log('Error', error.message);
+                }
+            });
     }
 
     register(name: string, email: string, password: string, password_confirmation: string) {
         return axios
             .post(`${authEndpoint()}/register/`, {name, email, password, password_confirmation})
             .then((response: AxiosResponse) => {
-                if (response.data.accessToken) {
-                    localStorage.setItem('user', JSON.stringify(response.data));
-                    return response.data;
-                }
-                if (response.data.message) {
-                    return response.data;
-                }
+                return response.data.message;
             })
             .catch(function (error) {
                 if (error.response) {
-                    return {
-                        status: error.response.status,
-                        data: error.response.data
-                    };
-                } else {
-                    return {
-                        status: 500,
-                        data: error.toString()
-                    };
+                    return error.response;
                 }
+                return {
+                    status: 500,
+                    data: error.toString()
+                };
             });
     }
 

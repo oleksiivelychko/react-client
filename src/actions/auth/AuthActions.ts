@@ -105,7 +105,7 @@ export const register = (name: string, email: string, password: string, password
 
             dispatch({
                 type: SET_MESSAGE,
-                payload: response.data.message,
+                payload: response.toString(),
             });
 
             return Promise.resolve();

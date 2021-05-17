@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Header from "../../views/Header";
 
 class ProfilePage extends React.Component {
 
@@ -13,16 +14,14 @@ class ProfilePage extends React.Component {
         }
 
         return (
-            <div className="container">
-                <header className="jumbotron">
-                    <h3>
-                        <strong>{currentUser.name}</strong> Profile
-                    </h3>
-                </header>
-                <p>
-                    <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
-                    {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
-                </p>
+            <div>
+                <Header username='alex'/>
+                <main>
+                    <p>
+                        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
+                        {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+                    </p>
+                </main>
             </div>
         );
     }

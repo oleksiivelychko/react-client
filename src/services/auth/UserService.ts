@@ -4,10 +4,10 @@ import axios from 'axios';
 
 class UserService {
     getUser() {
-        return axios.get(`${authEndpoint}/me/`, { headers: authHeader() });
+        return axios.get(`${authEndpoint()}/me/`, { headers: authHeader() });
     }
     refreshToken() {
-        return axios.get(`${authEndpoint}/refresh/`, { headers: authHeader() });
+        return axios.get(`${authEndpoint()}/refresh/`, { headers: authHeader() });
     }
 }
 

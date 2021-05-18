@@ -1,12 +1,39 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import UserService from "../../../services/auth/UserService";
 import Header from "../../views/Header";
+import {logout} from "../../../actions/auth/AuthActions";
 
-class ProfilePage extends React.Component {
+class ProfilePage extends React.Component <any, any> {
+
+    constructor(props: {}) {
+        super(props);
+
+        this.state = {
+            user: {
+                name: ''
+            }
+        };
+    }
+
+    componentDidMount() {
+
+        const { dispatch } = this.props;
+
+        UserService.getUser().then(
+            response => {
+                this.setState({
+                    user: response.data
+                });
+            },
+            error => {
+                dispatch(logout());
+            }
+        );
+    }
 
     render() {
-        // @ts-ignore
         const { user: currentUser } = this.props;
 
         if (!currentUser) {
@@ -15,7 +42,7 @@ class ProfilePage extends React.Component {
 
         return (
             <div>
-                <Header username='alex'/>
+                <Header username={this.state.user.name}/>
                 <main>
                     <p>
                         <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import UserService from "../../../services/auth/UserService";
 import Header from "../../views/Header";
-import {logout} from "../../../actions/auth/AuthActions";
+import {refresh, logout} from "../../../actions/auth/AuthActions";
 
 class ProfilePage extends React.Component <any, any> {
 
@@ -21,16 +21,22 @@ class ProfilePage extends React.Component <any, any> {
 
         const { dispatch } = this.props;
 
-        UserService.getUser().then(
-            response => {
-                this.setState({
-                    user: response.data
-                });
-            },
-            error => {
+        dispatch(refresh())
+            .then(() => {
+                UserService.getUser().then(
+                    response => {
+                        this.setState({
+                            user: response.data
+                        });
+                    },
+                    error => {
+                        dispatch(logout());
+                    }
+                );
+            })
+            .catch(() => {
                 dispatch(logout());
-            }
-        );
+            });
     }
 
     render() {

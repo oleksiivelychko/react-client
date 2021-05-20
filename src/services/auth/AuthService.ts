@@ -18,10 +18,7 @@ class AuthService {
                     //console.log(error.response.data);
                     //console.log(error.response.status);
                     //console.log(error.response.headers);
-                    return {
-                        status: error.response.status,
-                        data: error.response.data
-                    };
+                    return error.response;
                 } else if (error.request) {
                     // The request was made but no response was received
                     //console.log(error.request);
@@ -29,6 +26,7 @@ class AuthService {
                     // Something happened in setting up the request that triggered an Error
                     //console.log('Error', error.message);
                 }
+                throw Error(error.toString())
             });
     }
 
@@ -42,10 +40,7 @@ class AuthService {
                 if (error.response) {
                     return error.response;
                 }
-                return {
-                    status: 500,
-                    data: error.toString()
-                };
+                throw Error(error.toString())
             });
     }
 
